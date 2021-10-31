@@ -16,31 +16,26 @@ import ru.app.model.test.entity.Test;
 import ru.app.model.test.entity.TestBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 @Singleton
 @ToString
 public class HardcodedDatabase implements Database {
-    @InjectByType
-    private ApplicationContext context;
 
-    @InjectByType
     @Getter
-    private Map<Integer, Question> questions;
-    @InjectByType
+    private final Map<Integer, Question> questions = new HashMap<>();
     @Getter
-    private Map<Integer, Answer> answers;
-    @InjectByType
+    private final Map<Integer, Answer> answers = new HashMap<>();
     @Getter
-    private Map<Integer, Test> tests;
-    @InjectByType
+    private final Map<Integer, Test> tests = new HashMap<>();
     @Getter
-    private Map<Integer, Result> results;
+    private final Map<Integer, Result> results = new HashMap<>();
 
     private void initAnswers() {
         answers.put(
                 1,
-                context.getObject(AnswerBuilder.class)
+                new AnswerBuilder()
                         .id(1)
                         .content("Да")
                         .build()
@@ -48,7 +43,7 @@ public class HardcodedDatabase implements Database {
 
         answers.put(
                 2,
-                context.getObject(AnswerBuilder.class)
+                new AnswerBuilder()
                         .id(2)
                         .content("Нет")
                         .build()
@@ -56,21 +51,21 @@ public class HardcodedDatabase implements Database {
 
         answers.put(
                 3,
-                context.getObject(AnswerBuilder.class)
+                new AnswerBuilder()
                         .id(3)
                         .content("Не знаю")
                         .build()
         );
         answers.put(
                 4,
-                context.getObject(AnswerBuilder.class)
+                new AnswerBuilder()
                         .id(4)
                         .content("Дима")
                         .build()
         );
         answers.put(
                 5,
-                context.getObject(AnswerBuilder.class)
+                new AnswerBuilder()
                         .id(5)
                         .content("Вася")
                         .build()
@@ -80,7 +75,7 @@ public class HardcodedDatabase implements Database {
     private void initQuestions() {
         questions.put(
                 1,
-                context.getObject(QuestionBuilder.class)
+                new QuestionBuilder()
                         .id(1)
                         .content("2 + 2 = 5 ?")
                         .points(10)
@@ -94,7 +89,7 @@ public class HardcodedDatabase implements Database {
         );
         questions.put(
                 2,
-                context.getObject(QuestionBuilder.class)
+                new QuestionBuilder()
                         .id(2)
                         .content("5 + 4 = 9 ?")
                         .points(10)
@@ -108,7 +103,7 @@ public class HardcodedDatabase implements Database {
         );
         questions.put(
                 3,
-                context.getObject(QuestionBuilder.class)
+                new QuestionBuilder()
                         .id(3)
                         .content("Это предложение ложно")
                         .points(10)
@@ -122,7 +117,7 @@ public class HardcodedDatabase implements Database {
         );
         questions.put(
                 4,
-                context.getObject(QuestionBuilder.class)
+                new QuestionBuilder()
                         .id(4)
                         .content("Как зовут автора этой программы?")
                         .points(10)
@@ -139,7 +134,7 @@ public class HardcodedDatabase implements Database {
     private void initTests() {
         tests.put(
                 1,
-                context.getObject(TestBuilder.class)
+                new TestBuilder()
                         .id(1)
                         .title("Математика")
                         .questions(new ArrayList<>() {{
@@ -150,7 +145,7 @@ public class HardcodedDatabase implements Database {
         );
         tests.put(
                 2,
-                context.getObject(TestBuilder.class)
+                new TestBuilder()
                         .id(2)
                         .title("Разные вопросы")
                         .questions(new ArrayList<>() {{
@@ -161,7 +156,7 @@ public class HardcodedDatabase implements Database {
         );
         tests.put(
                 3,
-                context.getObject(TestBuilder.class)
+                new TestBuilder()
                         .id(3)
                         .title("Все вопросы")
                         .questions(new ArrayList<>() {{

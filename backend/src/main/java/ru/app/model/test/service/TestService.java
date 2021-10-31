@@ -1,5 +1,6 @@
 package ru.app.model.test.service;
 
+import ru.app._infrastructure.Service;
 import ru.app._infrastructure.annotations.InjectByType;
 import ru.app._infrastructure.annotations.PostConstruct;
 import ru.app._infrastructure.annotations.Singleton;
@@ -13,7 +14,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Singleton
-public class TestService {
+public class TestService implements Service {
     @InjectByType
     private TestRepository testRepository;
 

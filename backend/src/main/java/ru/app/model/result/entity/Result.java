@@ -16,5 +16,8 @@ public class Result implements Entity {
     private Integer score;
     @Getter
     @Setter
+    private Integer testId;
+    @Getter
+    @Setter
     private Test test;
 }

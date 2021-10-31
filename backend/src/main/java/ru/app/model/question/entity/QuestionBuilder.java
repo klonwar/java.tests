@@ -1,13 +1,11 @@
 package ru.app.model.question.entity;
 
-import ru.app._infrastructure.annotations.InjectByType;
 import ru.app.model.answer.entity.Answer;
 
 import java.util.List;
 
 public class QuestionBuilder {
-    @InjectByType
-    private Question question;
+    private final Question question = new Question();
 
     public QuestionBuilder() {
     }

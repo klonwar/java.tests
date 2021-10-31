@@ -1,45 +1,61 @@
 package ru.app.model.result.entity;
 
+import lombok.SneakyThrows;
 import ru.app._infrastructure.annotations.InjectByType;
-import ru.app.database.Database;
 import ru.app.database.Repository;
+import ru.app.database.mysql.SQLExecutor;
 import ru.app.model.test.entity.Test;
+import ru.app.model.test.entity.TestRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ResultRepository implements Repository<Result> {
     @InjectByType
-    Database database;
+    private TestRepository testRepository;
+
+    @InjectByType
+    private ResultExtractor resultExtractor;
+
+    @InjectByType
+    private SQLExecutor sqlExecutor;
 
     @Override
     public Result findOne(int id) {
-        return database.getResult(id);
+        return null;
     }
 
     @Override
     public List<Result> findAll() {
-        return new ArrayList<>(database.getResults().values());
+        return new ArrayList<>();
     }
 
     @Override
     public Result create(Result newEntity) {
-        var maxIdOptional = database.getResults().keySet().stream().max(Integer::compare);
-        int newId = 1;
-        if (maxIdOptional.isPresent()) {
-            newId = maxIdOptional.get() + 1;
-        }
-        newEntity.setId(newId);
-        return database.setResult(newEntity);
+        var newEntityId = sqlExecutor.executeUpdate(String.format(
+                "insert into result (score, test_id)\n" +
+                        "values (%d, %d)",
+                newEntity.getScore(), newEntity.getTestId()
+        ));
+        newEntity.setId(newEntityId);
+        return newEntity;
     }
 
     public List<Result> findForTest(Test test) {
-        List<Result> forTest = new ArrayList<>();
-        for (var res : this.findAll()) {
-            if (Objects.equals(res.getTest().getId(), test.getId()))
-                forTest.add(res);
+        return this.executeQuery(String.format("select * from result\n" +
+                "where test_id = %d", test.getId()));
+    }
+
+    @SneakyThrows
+    public List<Result> executeQuery(String query) {
+        var results = sqlExecutor.executeQuery(query, resultExtractor);
+
+        for (var result : results) {
+            result.setTest(
+                    testRepository.findOne(result.getTestId())
+            );
         }
-        return forTest;
+
+        return results;
     }
 }

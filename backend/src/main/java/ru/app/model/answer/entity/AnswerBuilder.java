@@ -3,8 +3,7 @@ package ru.app.model.answer.entity;
 import ru.app._infrastructure.annotations.InjectByType;
 
 public class AnswerBuilder {
-    @InjectByType
-    private Answer answer;
+    private final Answer answer = new Answer();
 
     public AnswerBuilder() {
     }

@@ -3,12 +3,13 @@ package ru.app.ui;
 import lombok.Getter;
 
 public enum MainMenuAction {
-    CHOOSE_TEST("Выбрать тест"),
+    CHOOSE_TEST("Решить тест"),
     SEE_RESULTS("Посмотреть результаты");
 
     @Getter
     private final String label;
-    private MainMenuAction(String label) {
+
+    MainMenuAction(String label) {
         this.label = label;
     }
 }

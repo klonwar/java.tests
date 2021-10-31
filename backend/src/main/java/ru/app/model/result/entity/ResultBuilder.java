@@ -1,11 +1,9 @@
 package ru.app.model.result.entity;
 
-import ru.app._infrastructure.annotations.InjectByType;
 import ru.app.model.test.entity.Test;
 
 public class ResultBuilder {
-    @InjectByType
-    private Result result;
+    private final Result result = new Result();
 
     public ResultBuilder() {
     }
@@ -20,8 +18,15 @@ public class ResultBuilder {
         return this;
     }
 
+    public ResultBuilder testId(Integer val) {
+        result.setTestId(val);
+        return this;
+    }
+
     public ResultBuilder test(Test val) {
         result.setTest(val);
+        if (val != null && val.getId() != null)
+            result.setTestId(val.getId());
         return this;
     }
 

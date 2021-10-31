@@ -1,33 +1,31 @@
 package ru.app.model.test.entity;
 
-import ru.app._infrastructure.annotations.InjectByType;
 import ru.app.model.question.entity.Question;
 
 import java.util.List;
 
 public class TestBuilder {
-    @InjectByType
-    private Test question;
+    private final Test test = new Test();
 
     public TestBuilder() {
     }
 
     public TestBuilder id(Integer val) {
-        question.setId(val);
+        test.setId(val);
         return this;
     }
 
     public TestBuilder title(String val) {
-        question.setTitle(val);
+        test.setTitle(val);
         return this;
     }
 
     public TestBuilder questions(List<Question> val) {
-        question.setQuestions(val);
+        test.setQuestions(val);
         return this;
     }
 
     public Test build() {
-        return question;
+        return test;
     }
 }
