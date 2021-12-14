@@ -13,8 +13,8 @@ public class ResultService implements Service {
     @InjectByType
     private ResultRepository resultRepository;
 
-    public void saveResult(Test test, int score) {
-        resultRepository.create((new ResultBuilder()).test(test).score(score).build());
+    public Result saveResult(Test test, int score) {
+        return resultRepository.create((new ResultBuilder()).test(test).score(score).build());
     }
 
     public List<Result> findForTest(Test test) {
@@ -29,5 +29,9 @@ public class ResultService implements Service {
             sum += score;
         }
         return (results.size() != 0) ? sum / results.size() : 0;
+    }
+
+    public Result getById(Integer id) {
+        return resultRepository.findOne(id);
     }
 }

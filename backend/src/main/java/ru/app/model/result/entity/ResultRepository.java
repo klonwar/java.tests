@@ -22,7 +22,12 @@ public class ResultRepository implements Repository<Result> {
 
     @Override
     public Result findOne(int id) {
-        return null;
+        var results = this.executeQuery(String.format("select * from result\n" +
+                "where id = %d", id));
+        if (results == null)
+            return null;
+
+        return results.get(0);
     }
 
     @Override
